@@ -38,8 +38,7 @@ export default function RootLayout() {
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: true }} />
       <Stack.Screen name="map" options={{ headerShown: true }} />
-      <Stack.Screen name="scrollAni" options={{ headerShown: true }} />
+      <Stack.Screen name="scrollAni" options={{ headerShown: false }} />
     </Stack>
   );
 }
-  
