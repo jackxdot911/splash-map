@@ -90,6 +90,7 @@ const Map = () => {
 
   const closeModal = () => {
     setModalVisible(false);
+    setCurrentHeight(SCREEN_HEIGHT * 0.3)
   };
 
   return (
@@ -146,6 +147,10 @@ const Map = () => {
                   </Text>
                 </>
               )}
+
+              <Text>currentHeight : {currentHeight}</Text>
+              <Text>SCREEN_HEIGHT : {SCREEN_HEIGHT * 0.8}</Text>
+
 
               {currentHeight >= SCREEN_HEIGHT * 0.8 && (
                 <View style={styles.extraContent}>
