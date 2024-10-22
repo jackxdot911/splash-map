@@ -3,22 +3,17 @@
     "version": ">= 12.5.2",
     "appVersionSource": "remote"
   },
-  "build": {
-    "development": {
-      "developmentClient": true,
-      "distribution": "internal"
-    },
-    "preview": {
-      "distribution": "internal"
-    },
+ "build": {
     "production": {
-      "autoIncrement": true
+      "android": {
+        "image": "latest"
+      },
+      "ios": {
+        "image": "latest"
+      }
     }
   },
   "submit": {
     "production": {}
-  },
-  "image": {
-    "url": "latest"
   }
 }
