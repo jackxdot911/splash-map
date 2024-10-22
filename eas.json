@@ -4,7 +4,9 @@
     "appVersionSource": "remote"
   },
   "build": {
-    "image": "latest",
+    "image": {
+      "buildType": "managed"
+    },
     "development": {
       "developmentClient": true,
       "distribution": "internal"
