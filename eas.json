@@ -4,9 +4,6 @@
     "appVersionSource": "remote"
   },
   "build": {
-    "image": {
-      "buildType": "managed"
-    },
     "development": {
       "developmentClient": true,
       "distribution": "internal"
@@ -20,5 +17,8 @@
   },
   "submit": {
     "production": {}
+  },
+  "image": {
+    "url": "latest"
   }
 }
