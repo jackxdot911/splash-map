@@ -4,6 +4,7 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
 import "react-native-reanimated";
+import { Asset } from 'expo-asset';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -15,12 +16,24 @@ export default function RootLayout() {
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
 
+
   useEffect(() => {
-    if (fontsLoaded || fontError) {
-      SplashScreen.hideAsync();
-      setAppReady(true);
-    }
-  }, [fontsLoaded, fontError]); 
+    const loadAssets = async () => {
+      const images = [
+        require("../assets/images/scrollImg01.png"),
+        require("../assets/images/scrollImg02.png"),
+      ];
+      const cacheImages = images.map(image => Asset.fromModule(image).downloadAsync());
+      await Promise.all(cacheImages);
+    };
+
+    loadAssets().then(() => {
+      if (fontsLoaded || fontError) {
+        SplashScreen.hideAsync();
+        setAppReady(true);
+      }
+    });
+  }, [fontsLoaded, fontError]);
 
   if (!appReady || !splashAnimationFinished) {
     return (
