@@ -13,23 +13,23 @@ import { LinearGradient } from "expo-linear-gradient";
 const { height, width } = Dimensions.get("window");
 
 const scrollAni = () => {
-  const scrollY1 = useRef(new Animated.Value(-height * 0.7)).current;
-  const scrollY2 = useRef(new Animated.Value(0)).current;
+  const scrollY1 = useRef(new Animated.Value(0)).current;
+  const scrollY2 = useRef(new Animated.Value(-height * 0.7)).current;
 
   useEffect(() => {
     // Scroll image 1 (top to bottom)
     Animated.loop(
       Animated.timing(scrollY1, {
-        toValue: 0, // Scroll height is 70% of the screen height
+        toValue: -height * 0.7, // Scroll height is 70% of the screen height
         duration: 6000, // Duration for scrolling
         useNativeDriver: true,
       })
-    ).start();
+    ).start()
 
     // Scroll image 2 (bottom to top)
     Animated.loop(
       Animated.timing(scrollY2, {
-        toValue: -height * 0.7,
+        toValue: 0,
         duration: 6000,
         useNativeDriver: true,
       })
@@ -43,12 +43,12 @@ const scrollAni = () => {
         {/* Left Image (scrolls from top to bottom) */}
         <Animated.View style={{ transform: [{ translateY: scrollY1 }] }}>
           <Image
-            source={require("../assets/images/scrollImg01.png")}
+            source={require("../assets/images/scrollimgSingle01.png")}
             style={styles.image}
             resizeMode="cover"
           />
           <Image
-            source={require("../assets/images/scrollImg01.png")}
+            source={require("../assets/images/scrollimgSingle01.png")}
             style={styles.image}
             resizeMode="cover"
           />
@@ -57,12 +57,12 @@ const scrollAni = () => {
         {/* Right Image (scrolls from bottom to top) */}
         <Animated.View style={{ transform: [{ translateY: scrollY2 }] }}>
           <Image
-            source={require("../assets/images/scrollImg02.png")}
+            source={require("../assets/images/scrollimgSingle02.png")}
             style={styles.image}
             resizeMode="cover"
           />
           <Image
-            source={require("../assets/images/scrollImg02.png")}
+            source={require("../assets/images/scrollimgSingle02.png")}
             style={styles.image}
             resizeMode="cover"
           />
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     flexDirection: "row",
-    height: "70%", 
+    height: "70%",
     width: "100%",
     paddingHorizontal: 4,
   },

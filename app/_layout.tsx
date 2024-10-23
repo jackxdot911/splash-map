@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import "react-native-reanimated";
 import { Asset } from 'expo-asset';
 
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [appReady, setAppReady] = useState(false);
@@ -16,12 +16,13 @@ export default function RootLayout() {
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
 
-
   useEffect(() => {
     const loadAssets = async () => {
       const images = [
         require("../assets/images/scrollImg01.png"),
         require("../assets/images/scrollImg02.png"),
+        require("../assets/images/scrollimgSingle01.png"),
+        require("../assets/images/scrollimgSingle02.png")
       ];
       const cacheImages = images.map(image => Asset.fromModule(image).downloadAsync());
       await Promise.all(cacheImages);
@@ -29,7 +30,7 @@ export default function RootLayout() {
 
     loadAssets().then(() => {
       if (fontsLoaded || fontError) {
-        SplashScreen.hideAsync();
+        // SplashScreen.hideAsync();
         setAppReady(true);
       }
     });
