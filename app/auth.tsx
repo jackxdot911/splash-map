@@ -6,7 +6,7 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 
-const App = () => {
+const auth = () => {
   useEffect(() => {
     GoogleSignin.configure({
       webClientId:
@@ -50,4 +50,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default auth;
