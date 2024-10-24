@@ -11,7 +11,7 @@ const Auth: React.FC = () => {
 
   useEffect(() => {
     GoogleSignin.configure({
-      webClientId: '676617224815-vbb0alrocnihe6n1tn4rje3isalpa4b9.apps.googleusercontent.com',
+      webClientId: '589716530340-d1uueqqe15gobekhidpf3ut8jpvc8h8b.apps.googleusercontent.com',
       offlineAccess: true,
       forceCodeForRefreshToken: true,
     });
