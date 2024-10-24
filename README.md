@@ -78,3 +78,14 @@ https://stackoverflow.com/questions/57505545/expo-google-sign-in-developer-error
 ///
 
 keystore password -> 123456
+
+
+///
+
+create keystore
+
+keytool -genkey -v -keystore new-release-key.keystore -alias new-key-alias -keyalg RSA -keysize 2048 -validity 10000
+
+
+keytool -list -v -keystore new-release-key.keystore -alias new-key-alias
+
