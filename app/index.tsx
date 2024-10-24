@@ -11,9 +11,6 @@ const Index = () => {
       <TouchableOpacity onPress={()=>router.push('/scrollAni')}>
         <Text style={styles.text}>Scroll-Animation</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={()=>router.push('/webView')}>
-        <Text style={styles.text}>Web-View</Text>
-      </TouchableOpacity>
       <TouchableOpacity onPress={()=>router.push('/_sitemap')}>
         <Text style={styles.text}>Site Map</Text>
       </TouchableOpacity>
