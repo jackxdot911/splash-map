@@ -21,7 +21,12 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.jackdotedge.test"
+      "package": "com.jackdotedge.test",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCTS0JJv4TAfo1AhL0svPG97zYqlZLmA6Y"
+        }
+      }
     },
     "web": {
       "bundler": "metro",
