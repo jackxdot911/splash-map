@@ -14,6 +14,9 @@ const Index = () => {
       <TouchableOpacity onPress={()=>router.push('/bottomSheet')}>
         <Text style={styles.text}>Bottom sheet</Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={()=>router.push('/auth')}>
+        <Text style={styles.text}>Auth</Text>
+      </TouchableOpacity>
       <TouchableOpacity onPress={()=>router.push('/_sitemap')}>
         <Text style={styles.text}>Site Map</Text>
       </TouchableOpacity>

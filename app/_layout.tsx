@@ -54,6 +54,7 @@ export default function RootLayout() {
       <Stack.Screen name="map" options={{ headerShown: true }} />
       <Stack.Screen name="scrollAni" options={{ headerShown: false }} />
       <Stack.Screen name="bottomSheet" options={{ headerShown: false }} />
+      <Stack.Screen name="auth" options={{ headerShown: true }} />
     </Stack>
   );
 }
