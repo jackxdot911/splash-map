@@ -89,3 +89,11 @@ keytool -genkey -v -keystore new-release-key.keystore -alias new-key-alias -keya
 
 keytool -list -v -keystore new-release-key.keystore -alias new-key-alias
 
+
+
+/////////////////
+
+
+
+Download your apk
+run keytool -printcert -jarfile app.apk (will print the SHA1)
