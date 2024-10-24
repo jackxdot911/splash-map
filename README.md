@@ -66,3 +66,7 @@ keytool -list -v -keystore debug.keystore -alias androiddebugkey -storepass andr
 /////////////
 eas credentials 
 to get keystore
+
+
+
+https://stackoverflow.com/questions/57505545/expo-google-sign-in-developer-error/72383211#72383211
