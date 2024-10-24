@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import "react-native-reanimated";
 import { Asset } from 'expo-asset';
 
-// SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [appReady, setAppReady] = useState(false);
@@ -30,7 +30,7 @@ export default function RootLayout() {
 
     loadAssets().then(() => {
       if (fontsLoaded || fontError) {
-        // SplashScreen.hideAsync();
+        SplashScreen.hideAsync();
         setAppReady(true);
       }
     });
@@ -53,6 +53,7 @@ export default function RootLayout() {
       <Stack.Screen name="index" options={{ headerShown: true }} />
       <Stack.Screen name="map" options={{ headerShown: true }} />
       <Stack.Screen name="scrollAni" options={{ headerShown: false }} />
+      <Stack.Screen name="bottomSheet" options={{ headerShown: false }} />
     </Stack>
   );
 }
