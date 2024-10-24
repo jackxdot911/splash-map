@@ -99,7 +99,7 @@ const Map = () => {
         <MapView.Animated
           style={styles.map}
           region={initialRegion}
-          mapType="standard"
+          mapType="satellite"
         >
           {markersData.map((marker) => (
             <Marker.Animated
