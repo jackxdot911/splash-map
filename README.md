@@ -34,7 +34,7 @@ eas build:configure       ———-All.   -eas.json
 
 Add /ios and /android in .gitignore
 
-eas build —profile development —platform ios
+eas build --profile development --platform ios
 
 
 
@@ -52,5 +52,5 @@ eas.json
 }
 }
 
-eas build —platform android —profile androidapk 
+eas build --platform android --profile androidapk 
 
