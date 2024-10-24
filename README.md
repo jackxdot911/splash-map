@@ -70,3 +70,11 @@ to get keystore
 
 
 https://stackoverflow.com/questions/57505545/expo-google-sign-in-developer-error/72383211#72383211
+
+
+
+
+
+///
+
+keystore password -> 123456
