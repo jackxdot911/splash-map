@@ -6,6 +6,10 @@ import { useEffect, useState } from "react";
 import "react-native-reanimated";
 import { Asset } from 'expo-asset';
 
+import { Amplify } from "aws-amplify";
+import awsExports from "./aws-exports";
+Amplify.configure(awsExports);
+
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -55,6 +59,7 @@ export default function RootLayout() {
       <Stack.Screen name="scrollAni" options={{ headerShown: false }} />
       <Stack.Screen name="bottomSheet" options={{ headerShown: false }} />
       <Stack.Screen name="auth" options={{ headerShown: true }} />
+      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
     </Stack>
   );
 }

@@ -1,59 +1,47 @@
-import { StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from "react-native";
-import awsconfig from './aws-exports'; 
-import React, { useEffect, useState } from 'react';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { router } from "expo-router";
-import AuthScreen from "./authScreen";
-import { Amplify } from 'aws-amplify';
-import Auth from '@aws-amplify/auth';
-
-Amplify.configure(awsconfig);
+import { withAuthenticator, Authenticator } from "@aws-amplify/ui-react-native";
+import { signOut } from 'aws-amplify/auth';
 
 const Index = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Initialize to false
-  const [loading, setLoading] = useState(true); // Add loading state
-
-  useEffect(() => {
-    const checkAuthStatus = async () => {
-      setLoading(true); // Start loading
-      try {
-        console.log("Checking authentication status...");
-        await Auth.currentAuthenticatedUser();
-        console.log("User is authenticated");
-        setIsAuthenticated(true);
-      } catch (error) {
-        console.error("Authentication error:", error);
-        setIsAuthenticated(false);
-      } finally {
-        setLoading(false); // End loading
-      }
-    };
-    checkAuthStatus();
-  }, []);
-
-  if (loading) {
-    return <ActivityIndicator size="large" color="#0000ff" />; // Loading indicator
-  }
-
-  return isAuthenticated ? (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={() => router.push('/map')}>
-        <Text style={styles.text}>Map</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/scrollAni')}>
-        <Text style={styles.text}>Scroll-Animation</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/bottomSheet')}>
-        <Text style={styles.text}>Bottom sheet</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/auth')}>
-        <Text style={styles.text}>Auth</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/_sitemap')}>
-        <Text style={styles.text}>Site Map</Text>
-      </TouchableOpacity>
-    </View>
-  ) : (
-    <AuthScreen setAuth={setIsAuthenticated} />
+  const handleSignout = async () => {
+    try {
+      await signOut();
+    } catch (error) {
+      console.log("error signing out: ", error);
+    }
+  };
+  return (
+    <Authenticator.Provider>
+      <Authenticator>
+        <View style={styles.container}>
+          <Pressable style={styles.button} onPress={() => handleSignout()}>
+            <Text style={styles.buttonText}>Sign out</Text>
+          </Pressable>
+          <TouchableOpacity onPress={() => router.push("/map")}>
+            <Text style={styles.text}>Map</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => router.push("/scrollAni")}>
+            <Text style={styles.text}>Scroll-Animation</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => router.push("/bottomSheet")}>
+            <Text style={styles.text}>Bottom sheet</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => router.push("/auth")}>
+            <Text style={styles.text}>Auth</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => router.push("/_sitemap")}>
+            <Text style={styles.text}>Site Map</Text>
+          </TouchableOpacity>
+        </View>
+      </Authenticator>
+    </Authenticator.Provider>
   );
 };
 
@@ -62,11 +50,21 @@ export default Index;
 const styles = StyleSheet.create({
   text: {
     fontSize: 30,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  button: {
+    marginTop: 50,
+    backgroundColor: "#B00020",
+    padding: 10,
+    borderRadius: 6,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 18,
   },
 });
