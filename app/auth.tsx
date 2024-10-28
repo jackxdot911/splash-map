@@ -1,81 +1,101 @@
-import { View, Text, StyleSheet } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import * as WebBrowser from 'expo-web-browser';
 import {
-  GoogleSignin,
-  GoogleSigninButton,
-  statusCodes,
-} from '@react-native-google-signin/google-signin';
+  useAuthRequest,
+  exchangeCodeAsync,
+  revokeAsync,
+  ResponseType,
+  AccessTokenRequestConfig,
+  makeRedirectUri, // Import this
+} from 'expo-auth-session';
+import { Button, Alert } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
+import { router } from 'expo-router';
 
-const Auth: React.FC = () => {
-  const [loginStatus, setLoginStatus] = useState<string>('');
+WebBrowser.maybeCompleteAuthSession();
+
+const clientId = '6878lk42lk73vv8a7jr4uspknk'; // Replace with your client ID
+const userPoolUrl = 'https://nick.auth.us-east-1.amazoncognito.com';
+const redirectUri = makeRedirectUri({ scheme: 'myapp' }); // Update this
+
+interface AuthTokens {
+  accessToken: string;
+  refreshToken: string;
+  expiresIn: number;
+  tokenType: string;
+}
+
+export default function App(): JSX.Element {
+  const [authTokens, setAuthTokens] = useState<AuthTokens | null>(null);
+  
+  const discoveryDocument = useMemo(() => ({
+    authorizationEndpoint: `${userPoolUrl}/oauth2/authorize`,
+    tokenEndpoint: `${userPoolUrl}/oauth2/token`,
+    revocationEndpoint: `${userPoolUrl}/oauth2/revoke`,
+  }), []);
+
+  const [request, response, promptAsync] = useAuthRequest(
+    {
+      clientId,
+      responseType: ResponseType.Code,
+      redirectUri,
+      usePKCE: true,
+    },
+    discoveryDocument
+  );
 
   useEffect(() => {
-    GoogleSignin.configure({
-      webClientId: '589716530340-d1uueqqe15gobekhidpf3ut8jpvc8h8b.apps.googleusercontent.com',
-      offlineAccess: true,
-      forceCodeForRefreshToken: true,
-    });
-  }, []);
+    const exchangeFn = async (exchangeTokenReq: AccessTokenRequestConfig) => {
+      try {
+        const exchangeTokenResponse = await exchangeCodeAsync(exchangeTokenReq, discoveryDocument);
+        setAuthTokens(exchangeTokenResponse as AuthTokens);
+        await SecureStore.setItemAsync('authTokens', JSON.stringify(exchangeTokenResponse));
 
-  const signIn = async () => {
-    try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      console.log(userInfo);
-      setLoginStatus('Hello World, login successful!'); // Update login status
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        if (error.message === statusCodes.SIGN_IN_CANCELLED) {
-          console.log('User cancelled the login flow');
-        } else if (error.message === statusCodes.IN_PROGRESS) {
-          console.log('Signing in');
-        } else if (error.message === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-          console.log('Play services not available');
-        } else {
-          console.log('Some other error happened');
-          console.log('Error message:', error.message);
-        }
-      } else {
-        console.log('Unexpected error:', error);
+        router.push('/map');
+      } catch (error) {
+        const errorMessage = (error as Error).message || 'Unable to exchange token';
+        Alert.alert('Token exchange error', errorMessage);
       }
+    };
+
+    if (response) {
+      if ('error' in response) {
+        const errorDescription = response.params.error_description || 'Something went wrong';
+        Alert.alert('Authentication error', errorDescription);
+        return;
+      }
+      if (response.type === 'success') {
+        exchangeFn({
+          clientId,
+          code: response.params.code,
+          redirectUri,
+          extraParams: {
+            code_verifier: request?.codeVerifier || '',
+          },
+        });
+      }
+    }
+  }, [discoveryDocument, request, response]);
+
+  const logout = async () => {
+    if (authTokens) {
+      await revokeAsync(
+        {
+          clientId,
+          token: authTokens.refreshToken,
+        },
+        discoveryDocument
+      );
+      await SecureStore.deleteItemAsync('authTokens');
+      setAuthTokens(null);
     }
   };
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>App</Text>
-      <GoogleSigninButton
-        style={styles.signInButton}
-        size={GoogleSigninButton.Size.Wide}
-        color={GoogleSigninButton.Color.Dark}
-        onPress={signIn}
-      />
-      {loginStatus ? <Text style={styles.successMessage}>{loginStatus}</Text> : null}
-    </View>
+  console.log('authTokens: ' + JSON.stringify(authTokens));
+
+  return authTokens ? (
+    <Button title="Logout" onPress={logout} />
+  ) : (
+    <Button disabled={!request} title="Login" onPress={() => promptAsync()} />
   );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-  },
-  signInButton: {
-    width: 192,
-    height: 48,
-    marginTop: 30,
-  },
-  successMessage: {
-    marginTop: 20,
-    fontSize: 18,
-    color: 'green',
-  },
-});
-
-export default Auth;
+}

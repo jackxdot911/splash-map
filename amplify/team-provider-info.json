@@ -1,0 +1,25 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-reistta-staging-8158a-authRole",
+      "UnauthRoleArn": "arn:aws:iam::273354662367:role/amplify-reistta-staging-8158a-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::273354662367:role/amplify-reistta-staging-8158a-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-reistta-staging-8158a-deployment",
+      "UnauthRoleName": "amplify-reistta-staging-8158a-unauthRole",
+      "StackName": "amplify-reistta-staging-8158a",
+      "StackId": "arn:aws:cloudformation:us-east-1:273354662367:stack/amplify-reistta-staging-8158a/b6388000-94f1-11ef-a32a-0ea18184ac3f",
+      "AmplifyAppId": "d2b3ljd3q3i0ry"
+    },
+    "categories": {
+      "auth": {
+        "reistta": {
+          "nativeClientId": "6878lk42lk73vv8a7jr4uspknk",
+          "userPoolId": "us-east-1_arploUSO9",
+          "userPoolName": "test",
+          "webClientId": "6878lk42lk73vv8a7jr4uspknk"
+        }
+      }
+    }
+  }
+}
