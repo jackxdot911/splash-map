@@ -4,9 +4,28 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
 import "react-native-reanimated";
+import { Amplify, ResourcesConfig } from "aws-amplify";
 import { Asset } from 'expo-asset';
 
 SplashScreen.preventAutoHideAsync();
+
+
+const awsConfig: ResourcesConfig = {
+  Auth: {
+    Cognito: {
+      userPoolId: 'us-east-1_arploUSO9', 
+      userPoolClientId: '6878lk42lk73vv8a7jr4uspknk', 
+    }
+  },
+  Storage: {
+    S3: {
+      bucket: 'splash-map',
+      region: 'us-east-1',
+    }
+  }
+};
+
+Amplify.configure(awsConfig);
 
 export default function RootLayout() {
   const [appReady, setAppReady] = useState(false);
@@ -55,7 +74,6 @@ export default function RootLayout() {
       <Stack.Screen name="scrollAni" options={{ headerShown: false }} />
       <Stack.Screen name="bottomSheet" options={{ headerShown: false }} />
       <Stack.Screen name="auth" options={{ headerShown: true }} />
-      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
     </Stack>
   );
 }
