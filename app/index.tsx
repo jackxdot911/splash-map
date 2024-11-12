@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { router } from "expo-router";
 import { withAuthenticator, Authenticator } from "@aws-amplify/ui-react-native";
-import { signOut } from 'aws-amplify/auth';
+import { signOut } from "aws-amplify/auth";
 
 const Index = () => {
   const handleSignout = async () => {
@@ -35,6 +35,9 @@ const Index = () => {
           </TouchableOpacity>
           <TouchableOpacity onPress={() => router.push("/auth")}>
             <Text style={styles.text}>Auth</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => router.push("/camera")}>
+            <Text style={styles.text}>camera</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => router.push("/_sitemap")}>
             <Text style={styles.text}>Site Map</Text>
