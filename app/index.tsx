@@ -206,6 +206,7 @@ const Index = () => {
           <NavigationButton title="Scroll Animation" route="/scrollAni" />
           <NavigationButton title="Bottom Sheet" route="/bottomSheet" />
           <NavigationButton title="Auth" route="/auth" />
+          <NavigationButton title="Camera Gallery" route="/cameraGallery" />
           <NavigationButton title="Camera" route="/camera" />
           <NavigationButton title="Site Map" route="/_sitemap" />
         </View>

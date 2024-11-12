@@ -21,6 +21,7 @@
     "@aws-amplify/rtn-web-browser": "^1.1.1",
     "@aws-amplify/storage": "^6.6.14",
     "@aws-amplify/ui-react-native": "^2.2.16",
+    "@aws-amplify/ui-react-storage": "^3.3.9",
     "@devvie/bottom-sheet": "^0.4.2",
     "@dotlottie/react-player": "^1.6.19",
     "@expo/vector-icons": "^14.0.2",
@@ -34,6 +35,7 @@
     "expo-auth-session": "^5.5.2",
     "expo-blur": "~13.0.2",
     "expo-camera": "~15.0.16",
+    "expo-clipboard": "~6.0.3",
     "expo-constants": "~16.0.2",
     "expo-file-system": "~17.0.1",
     "expo-font": "~12.0.9",
@@ -65,8 +67,7 @@
     "react-native-webview": "^13.12.3",
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
     "uuid": "^11.0.3",
-    "uuidv4": "^6.2.13",
-    "expo-clipboard": "~6.0.3"
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
