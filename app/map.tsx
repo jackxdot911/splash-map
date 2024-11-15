@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Animated,
   Dimensions,
+  Platform,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import Modal from "react-native-modal";
@@ -16,6 +17,8 @@ import {
   PanGestureHandler,
   State,
 } from "react-native-gesture-handler";
+import * as Device from "expo-device";
+import * as Location from "expo-location";
 
 type MarkerType = {
   id: number;
@@ -27,13 +30,6 @@ type MarkerType = {
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 
 const Map = () => {
-  const initialRegion = {
-    latitude: 13.3392,
-    longitude: 74.74,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  };
-
   const [selectedMarker, setSelectedMarker] = useState<MarkerType | null>(null);
   const [isModalVisible, setModalVisible] = useState(false);
   const [currentHeight, setCurrentHeight] = useState(SCREEN_HEIGHT * 0.3); // Track height state
@@ -42,6 +38,38 @@ const Map = () => {
   const minHeight = SCREEN_HEIGHT * 0.3;
   const maxHeight = SCREEN_HEIGHT * 0.9;
   const dragY = useRef(new Animated.Value(0)).current;
+
+  const [location, setLocation] = useState<Location.LocationObject | null>(
+    null
+  );
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function getCurrentLocation() {
+      if (Platform.OS === "android" && !Device.isDevice) {
+        setErrorMsg(
+          "Oops, this will not work on Snack in an Android Emulator. Try it on your device!"
+        );
+        return;
+      }
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    }
+
+    getCurrentLocation();
+  }, []);
+  const initialRegion : any = {
+    latitude: location?.coords.latitude,
+    longitude: location?.coords.longitude,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  };
 
   useEffect(() => {
     const listenerId = modalHeight.addListener(({ value }) => {
@@ -90,7 +118,7 @@ const Map = () => {
 
   const closeModal = () => {
     setModalVisible(false);
-    setCurrentHeight(SCREEN_HEIGHT * 0.3)
+    setCurrentHeight(SCREEN_HEIGHT * 0.3);
   };
 
   return (
@@ -150,7 +178,6 @@ const Map = () => {
 
               <Text>currentHeight : {currentHeight}</Text>
               <Text>SCREEN_HEIGHT : {SCREEN_HEIGHT * 0.8}</Text>
-
 
               {currentHeight >= SCREEN_HEIGHT * 0.8 && (
                 <View style={styles.extraContent}>

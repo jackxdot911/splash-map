@@ -208,6 +208,10 @@ const Index = () => {
           <NavigationButton title="Auth" route="/auth" />
           <NavigationButton title="Camera Gallery" route="/cameraGallery" />
           <NavigationButton title="Camera" route="/camera" />
+          <NavigationButton title="Haptic" route="/haptic" />
+          <NavigationButton title="Browser" route="/browser" />
+          <NavigationButton title="Web View" route="/webview" />
+          <NavigationButton title="Loaction" route="/location" />
           <NavigationButton title="Site Map" route="/_sitemap" />
         </View>
 
